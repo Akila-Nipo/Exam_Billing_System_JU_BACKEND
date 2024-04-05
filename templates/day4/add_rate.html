@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NEW CRTITERIA</title>
+  </head>
+  <body>
+    <h1>ADD NEW TYPE</h1>
+    <form action="{% url 'add_rate' %}" method="POST">
+        {%csrf_token%}
+        {% if error_message %}
+            <p style="color: red;">{{ error_message }}</p>
+            {% endif %}
+        <p>Enter Type: {{form.name}}</p>
+        <p>Enter Criteria: {{form.category}}</p>
+        <p>Enter Rates: {{form.value}}</p>
+        <input type="submit" value="SAVE" />
+    </form>
+  </body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <title>Home</title>
+    <style>
+        
+        .header-text {
+            color: #007bff;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            font-size: 5.5rem; 
+            font-weight: bold; 
+            margin-bottom: 30px; 
+        }
+
+       
+        body {
+            background-color: #f8f9fa; 
+        }
+
+        
+        .nav-link {
+            color: #007bff; 
+            margin:29px;
+            font-size:1.8rem;
+            font-weight: bold; 
+        }
+
+       
+        .nav-link:hover {
+            color: #0056b3; 
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="header-text text-center">Home Page</h1>
+        <ul class="nav d-flex bg-secondary fw-bold">
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'student_list' %}">Student List</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'Courses' %}">Course List</a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'add_stu' %}">Registration</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'search_student' %}">Enroll Courses</a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'rate_list' %}">Rate List</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'add_rate' %}">ADD NEW Rate</a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'committee_list' %}">Exam Committee List</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'add_committee' %}">ADD NEW COMMITTEE</a>
+            </li>
+           
+           
+        </ul>
+    </div>
+</body>
+</html>
