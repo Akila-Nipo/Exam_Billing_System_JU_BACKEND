@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Faculty List</title>
+    <style>
+        /* Define styles for container */
+        .container {
+            margin-top: 50px;
+            margin-bottom: 50px;
+            text-align: center;
+        }
+
+        /* Define styles for table */
+        .table {
+            width: 100%;
+            margin-top: 20px;
+            margin-bottom:20px;
+            border-collapse: collapse;
+        }
+
+        /* Define styles for table headings */
+        .thead-dark th {
+            background-color: #343a40;
+            color: #fff;
+            border-color: #343a40;
+        }
+
+        /* Define styles for table data */
+        .table-bordered td, .table-bordered th {
+            border: 1px solid #dee2e6;
+            padding: .75rem;
+            vertical-align: top;
+        }
+
+        /* Define styles for buttons */
+        .btn {
+            display: inline-block;
+            font-weight: 400;
+            color: #212529;
+            text-align: center;
+            vertical-align: middle;
+            user-select: none;
+            background-color: transparent;
+            border: 1px solid transparent;
+            padding: .375rem .75rem;
+            font-size: 1rem;
+            line-height: 1.5;
+            border-radius: .25rem;
+            transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+        }
+
+        .btn-primary {
+            color: #fff;
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+
+        .btn-danger {
+            color: #fff;
+            background-color: #dc3545;
+            border-color: #dc3545;
+        }
+
+        .btn-success {
+            color: #fff;
+            background-color: #28a745;
+            border-color: #28a745;
+        }
+
+        /* Define styles for button size */
+        .btn-sm {
+            padding: .25rem .5rem;
+            font-size: .875rem;
+            line-height: 1.5;
+            border-radius: .2rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center mt-5">Faculty List</h1>
+        <table class="table table-bordered mt-4">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Photo</th>
+                    <th>Name</th>
+                    <th>Designation</th>
+                    <th>Bank Account Number</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for faculty_member in all %}
+                <tr>
+                    <td><img src="{{ faculty_member.image }}" alt="{{ faculty_member.name }}" style="width: 100px; height: auto;"></td>
+                    <td>{{ faculty_member.name }}</td>
+                    <td>{{ faculty_member.rank }}</td>
+                    <td>{{ faculty_member.bank_account_number }}</td>
+                    <td>
+                        <!-- Uncomment below to add action buttons -->
+                        
+                        <a href="{% url 'edit_faculty' id=faculty_member.id %}" class="btn btn-primary btn-sm">EDIT</a>
+                        <a href="{% url 'remove_faculty' faculty_id=faculty_member.id %}" class="btn btn-danger btn-sm">DELETE</a> 
+                        
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        
+        <a href="{% url 'add_faculty' %}" class="btn btn-success">Add new faculty member</a>
+    </div>
+</body>
+</html>

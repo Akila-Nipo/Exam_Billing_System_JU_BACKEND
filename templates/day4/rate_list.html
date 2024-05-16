@@ -210,7 +210,7 @@
     {% elif group.grouper == "Remuneration of Supervisor(M.Phil/PhD)" %}
     <h4 class="text-center p-2 d-block bg-secondary card text-white">তত্ত্বাবধায়ক সম্মানী(এম. ফিল/ পিএইচ.ডি)</h4>
   {% endif %}
-    <table class="table table-striped">
+    <table class="table table-bordered">
       <thead>
         <tr>
           <th class="text-center">কাজের ধরণ</th>
@@ -252,7 +252,7 @@
               {% endif %}
             </td>
             <td class="text-center">{{ rate.category }}</td>
-            <td class="text-center">{{ rate.value }}</td>
+            <td class="text-center">৳ {{ rate.value }}</td>
             <td class="text-center">
               <a href="{% url 'edit_rate' rate.id %}" class="btn btn-edit">EDIT</a>
               <a href="{% url 'delete_rate' rate.id %}" class="btn btn-delete">DELETE</a>

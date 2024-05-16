@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect
-from .models import Student,Course
-from .forms import CourseForm,StudentForm,ExamCommitteeForm
+from .models import FacultyMember, Student,Course,Result
+from .forms import CourseForm, FacultyMemberForm,StudentForm,ExamCommitteeForm
 from django.shortcuts import redirect, get_object_or_404
 from .models import Rate,ExamCommittee
 from .forms import RateForm
@@ -305,3 +305,85 @@ def delete_committee(request, id):
     committee = get_object_or_404(ExamCommittee, id=id)
     committee.delete()
     return redirect('committee_list')
+
+from django.db import transaction
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from .models import YourModel
+from .serializer import YourModelSerializer,ResultSerializer
+
+class YourView(APIView):
+    def post(self, request, format=None):
+        serializer = YourModelSerializer(data=request.data)
+        if serializer.is_valid():
+            with transaction.atomic():
+                serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+def display_data(request):
+    # Retrieve data from YourModel
+    data = YourModel.objects.all()
+    # Pass the data to the template
+    for item in data:
+        faculty_member = FacultyMember.objects.filter(name=item.name).first()
+        item.image = faculty_member.image if faculty_member else None
+        
+    return render(request, 'day4/ExamBill_list.html', {'data': data})
+
+class SaveResult(APIView):
+    def post(self, request, format=None):
+        serializer = ResultSerializer(data=request.data)
+        if serializer.is_valid():
+            with transaction.atomic():
+                serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+##CHANGE##
+##CHANGE##
+##CHANGE##
+
+
+def faculty_list(request):
+    faculty = FacultyMember.objects.all()
+    serialized_data = list(faculty.values())  # Convert queryset to list of dictionaries
+    return JsonResponse(serialized_data, safe=False)
+
+def faculty_members(request):
+    all = FacultyMember.objects.all()
+    return render(request,'day4/faculty_list.html',{'all':all})
+
+
+def edit_faculty(request, id):
+    faculty_member = get_object_or_404(FacultyMember, id=id)
+    form = FacultyMemberForm(instance=faculty_member)
+    if request.method == 'POST':
+        form = FacultyMemberForm(request.POST, instance=faculty_member)
+        if form.is_valid():
+            form.save()
+            return redirect('faculty_members')
+    return render(request, 'day4/edit_faculty.html', {'form': form})
+
+def remove_faculty(request, faculty_id):
+    faculty_member = get_object_or_404(FacultyMember, id=faculty_id)
+    faculty_member.delete()
+    return redirect('faculty_members')
+
+def add_faculty(request):
+    if request.method == 'POST':
+        form = FacultyMemberForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('faculty_members')  # Redirect to the faculty list page after adding a faculty member
+    else:
+        form = FacultyMemberForm()
+    return render(request, 'day4/add_faculty.html', {'form': form})
+
+##
+def teacher_profile(request):
+    name = request.GET.get('name')
+    teacher = get_object_or_404(FacultyMember, name=name)
+    results = YourModel.objects.filter(name=name)
+    return render(request, 'day4/teacher_profile.html', {'teacher': teacher, 'results': results})

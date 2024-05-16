@@ -55,6 +55,13 @@ class Rate(models.Model):
 
     def __str__(self):
         return f"{self.name} - {self.category}"
+    
+
+class Result(models.Model):
+    name = models.CharField(max_length=100)
+    semester = models.CharField(max_length=20)
+    courses = models.TextField()  # Store courses as a comma-separated string
+    total_amount = models.DecimalField(max_digits=10, decimal_places=2)
 
 class ExamCommittee(models.Model):
     year=models.CharField(max_length=100)
@@ -71,8 +78,33 @@ class Routine(models.Model):
     def __str__(self):
         return f"{self.teacher_name} - {self.semester}"
 
+class YourModel(models.Model):
+    name = models.CharField(max_length=100)
+    semester = models.CharField(max_length=100)
 
+class Result(models.Model):
+    name = models.CharField(max_length=100)
+    semester = models.CharField(max_length=20)
+    courses = models.TextField()  # Store courses as a comma-separated string
+    
 
+##CHANGE##
+##CHANGE##
+class FacultyMember(models.Model):
+    RANK_CHOICES = [
+        ('Professor', 'Professor'),
+        ('Associate Professor', 'Associate Professor'),
+        ('Assistant Professor', 'Assistant Professor'),
+        ('Lecturer', 'Lecturer'),
+    ]
+
+    name = models.CharField(max_length=100)
+    image = models.URLField()
+    rank = models.CharField(max_length=100, choices=RANK_CHOICES)
+    bank_account_number = models.CharField(max_length=20)
+
+    def __str__(self):
+        return self.name
 
     
     
