@@ -82,11 +82,20 @@ class YourModel(models.Model):
     name = models.CharField(max_length=100)
     semester = models.CharField(max_length=100)
 
+# class Result(models.Model):
+#     name = models.CharField(max_length=100)
+#     semester = models.CharField(max_length=20)
+#     courses = models.TextField()  # Store courses as a comma-separated string
+
 class Result(models.Model):
     name = models.CharField(max_length=100)
-    semester = models.CharField(max_length=20)
-    courses = models.TextField()  # Store courses as a comma-separated string
+    semester = models.CharField(max_length=100)
     
+    results = models.JSONField(default=dict)
+    total_result = models.DecimalField(max_digits=10, decimal_places=2)  # Adjust as needed
+
+    def __str__(self):
+        return f"{self.name} - {self.semester}"    
 
 ##CHANGE##
 ##CHANGE##

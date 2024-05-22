@@ -5,7 +5,15 @@ from django.shortcuts import redirect, get_object_or_404
 from .models import Rate,ExamCommittee
 from .forms import RateForm
 from django.http import JsonResponse
+from django.db import transaction
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from .models import YourModel
+from .serializer import YourModelSerializer,ResultSerializer
 import csv
+
+from rest_framework.decorators import api_view
 
 # Create your views here.
 def home(request):
@@ -306,12 +314,7 @@ def delete_committee(request, id):
     committee.delete()
     return redirect('committee_list')
 
-from django.db import transaction
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework import status
-from .models import YourModel
-from .serializer import YourModelSerializer,ResultSerializer
+
 
 class YourView(APIView):
     def post(self, request, format=None):
@@ -387,3 +390,13 @@ def teacher_profile(request):
     teacher = get_object_or_404(FacultyMember, name=name)
     results = YourModel.objects.filter(name=name)
     return render(request, 'day4/teacher_profile.html', {'teacher': teacher, 'results': results})
+
+
+def save_results(request):
+    if request.method == 'POST':
+        serializer = ResultSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({'message': 'Data saved successfully'}, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    return Response({'error': 'Invalid request method'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)

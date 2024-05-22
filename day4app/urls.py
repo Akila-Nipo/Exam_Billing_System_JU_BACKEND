@@ -1,6 +1,6 @@
 from django.urls import path
 from . import views
-from .views import get_courses,YourView,SaveResult,display_data
+from .views import get_courses,YourView,SaveResult,display_data,save_results
 
 urlpatterns = [
     # path('admin/', admin.site.urls),
@@ -39,6 +39,8 @@ urlpatterns = [
     path('teacher_profile/', views.teacher_profile, name='teacher_profile'),
 
     path('save-result/', SaveResult.as_view(),name='save_result'),
+
+    path('api/save-results/', save_results, name='save_results'),
 
      ##CHANGE##
     path("api/faculty/",views.faculty_list,name="faculty_list"),

@@ -9,7 +9,12 @@ class YourModelSerializer(serializers.ModelSerializer):
         # fields = ['name', 'semester']
         fields = '__all__'
 
+# class ResultSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = Result
+#         fields = '__all__'        
+
 class ResultSerializer(serializers.ModelSerializer):
     class Meta:
         model = Result
-        fields = '__all__'        
+        fields = ['name', 'semester', 'results', 'total_result']
