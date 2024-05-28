@@ -1,7 +1,7 @@
 # serializer.py
 
 from rest_framework import serializers
-from .models import YourModel,Result
+from .models import YourModel
 
 class YourModelSerializer(serializers.ModelSerializer):
     class Meta:
@@ -14,7 +14,3 @@ class YourModelSerializer(serializers.ModelSerializer):
 #         model = Result
 #         fields = '__all__'        
 
-class ResultSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Result
-        fields = ['name', 'semester', 'results', 'total_result']

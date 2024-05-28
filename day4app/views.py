@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect
-from .models import FacultyMember, Student,Course,Result
-from .forms import CourseForm, FacultyMemberForm,StudentForm,ExamCommitteeForm
+from .models import FacultyMember, Student,Course
+from .forms import CourseForm,FacultyMemberForm,StudentForm,ExamCommitteeForm
 from django.shortcuts import redirect, get_object_or_404
 from .models import Rate,ExamCommittee
 from .forms import RateForm
@@ -10,7 +10,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from .models import YourModel
-from .serializer import YourModelSerializer,ResultSerializer
+from .serializer import YourModelSerializer
 import csv
 
 from rest_framework.decorators import api_view
@@ -194,7 +194,7 @@ def get_courses(request):
         courses = []
 
         # Read the TXT file and filter the data based on the selected teacher's name and semester
-        with open('C:\\project_3_2\\routine.txt', 'r') as txtfile:
+        with open('C:\\GitHub_Projects\\project_3_2\\routine.txt', 'r') as txtfile:
             for line in txtfile:
                 row = line.strip().split(',')  # Assuming the data is comma-separated
              
@@ -328,21 +328,26 @@ class YourView(APIView):
 def display_data(request):
     # Retrieve data from YourModel
     data = YourModel.objects.all()
+    data1=ExamCommittee.objects.all()
     # Pass the data to the template
     for item in data:
         faculty_member = FacultyMember.objects.filter(name=item.name).first()
         item.image = faculty_member.image if faculty_member else None
-        
-    return render(request, 'day4/ExamBill_list.html', {'data': data})
+        context = {
+        'data': data,
+        'data1': data1,
+    }    
+    
+    return render(request, 'day4/ExamBill_list.html', context)
 
-class SaveResult(APIView):
-    def post(self, request, format=None):
-        serializer = ResultSerializer(data=request.data)
-        if serializer.is_valid():
-            with transaction.atomic():
-                serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+# class SaveResult(APIView):
+#     def post(self, request, format=None):
+#         serializer = ResultSerializer(data=request.data)
+#         if serializer.is_valid():
+#             with transaction.atomic():
+#                 serializer.save()
+#             return Response(serializer.data, status=status.HTTP_201_CREATED)
+#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 ##CHANGE##
 ##CHANGE##
@@ -392,11 +397,3 @@ def teacher_profile(request):
     return render(request, 'day4/teacher_profile.html', {'teacher': teacher, 'results': results})
 
 
-def save_results(request):
-    if request.method == 'POST':
-        serializer = ResultSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response({'message': 'Data saved successfully'}, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    return Response({'error': 'Invalid request method'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)

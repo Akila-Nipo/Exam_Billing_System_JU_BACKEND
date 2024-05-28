@@ -221,7 +221,7 @@
     <div class="container header-title text-center">
         <img src="https://upload.wikimedia.org/wikipedia/commons/f/fc/Official_seal_of_Jahangirnagar_University.png" alt="Logo">
         <div class="header-text">
-            <h1>Exam Bill List</h1>
+            <h1>Teachers' Exam Bill List</h1>
             <h2>Department of Computer Science and Engineering</h2>
             <h3>Jahangirnagar University</h3>
         </div>
@@ -253,12 +253,13 @@
                 <thead class="thead-dark">
                     <tr>
                         <th>Photo</th>
-                        <th>Name</th>
-                        <th>Semester</th>
+                        <th>Teacher's Name</th>
+                        <th>Exam Bill Collected for Semester</th>
+                        <th>Session</th>
                     </tr>
                 </thead>
                 <tbody id="dataTableBody">
-                    {% for item in data|slice:"18:" %}
+                    {% for item in data|slice:"1:" %}
                     <tr>
                         <td>
                             {% if item.image %}
@@ -267,8 +268,15 @@
                                 No image available
                             {% endif %}
                         </td>
-                        <td>{{ item.name }}</td>
-                        <td>{{ item.semester }}</td>
+                        <td><strong></stron><i>{{ item.name }}</i></strong></td>
+                        <td><strong><i>{{ item.semester }}</i></strong></td>
+                        <td>
+                            {% for exam_committee in data1 %}
+                                {% if exam_committee.year|slice:":3" == item.semester|slice:":3" %}
+                                   <strong> <i>{{ exam_committee.session }} </i> </strong>
+                                {% endif %}
+                            {% endfor %}
+                        </td>
                     </tr>
                     {% endfor %}
                 </tbody>

@@ -11,6 +11,11 @@
     .table-responsive{
           padding: 0 80px 0 80px;
         }
+        .search-bar {
+            max-width: 500px;
+            margin: 0 550px;
+        }
+
     .header-title {
             display: flex;
             align-items: center;
@@ -292,7 +297,14 @@
           </div>
         
         
-        
+          <form id="searchForm"  class="input-group mb-4 search-bar">
+            <input type="text" id="searchInput" name="name" class="form-control" placeholder="Search for a teacher by name" required>
+            <div class="input-group-append">
+                <button class="btn btn-primary" type="submit">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+        </form>
         
         
         
@@ -308,7 +320,7 @@
                     <th>Action</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody id="dataTableBody">
                 {% for faculty_member in all %}
                 <tr>
                     <td><img src="{{ faculty_member.image }}" alt="{{ faculty_member.name }}" style="width: 100px; height: auto;"></td>
@@ -369,5 +381,27 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const searchInput = document.getElementById("searchInput");
+            const dataTableBody = document.getElementById("dataTableBody");
+            const rows = dataTableBody.getElementsByTagName("tr");
+
+            searchInput.addEventListener("keyup", function() {
+                const filter = searchInput.value.toLowerCase();
+                for (let i = 0; i < rows.length; i++) {
+                    const nameCell = rows[i].getElementsByTagName("td")[1];
+                    if (nameCell) {
+                        const name = nameCell.textContent || nameCell.innerText;
+                        if (name.toLowerCase().includes(filter)) {
+                            rows[i].style.display = "";
+                        } else {
+                            rows[i].style.display = "none";
+                        }
+                    }
+                }
+            });
+        });
+    </script>
 </body>
 </html>

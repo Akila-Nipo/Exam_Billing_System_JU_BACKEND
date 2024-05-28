@@ -40,21 +40,22 @@
       height: 100vh;
     }
 
-    h1 {
+    h4 {
       text-align: center;
-      margin-bottom: 20px;
-      color: #857d7d;
+      margin-bottom: 40px;
+      color: #ffffff;
     }
 
     form {
       background: linear-gradient(to bottom, #007bff 15%, #fff 15%);
-      padding: 80px;
+      padding: 40px;
       border-radius: 10px;
       box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
       width: 400px;
       
     }
-
+    
+ 
     p {
       margin-bottom: 15px;
       color: #555;
@@ -271,9 +272,15 @@
 
 
 
+
+
+
+
+
+
   <div class="form-div">
   <form action="{% url 'add_rate' %}" method="POST">
-    <h1 class="mt-4">ADD NEW TYPE</h1>
+    <h4>ADD NEW RATE</h4>
     {% csrf_token %}
     {% if error_message %}
       <p class="error-message">{{ error_message }}</p>
@@ -284,6 +291,13 @@
     <input type="submit" value="SAVE" />
   </form>
 </div>
+
+
+
+
+
+
+
 
 
   <footer>

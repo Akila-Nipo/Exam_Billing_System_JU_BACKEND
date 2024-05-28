@@ -170,9 +170,39 @@
 
         .carousel-inner img {
             width: 100%;
-            height: 600px;
+            height: 700px;
             object-fit: cover;
         }
+        .carousel-caption {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 20px;
+            backdrop-filter: blur(10px);
+            color: white;
+            text-align: center;
+            animation: fadeInUp 1s ease-out;
+        }
+
+     
+        .carousel-caption img {
+            width: 100px; /* Adjust the logo size as needed */
+            height: auto;
+            margin-bottom: 15px;
+        }
+
+        .carousel-caption h1, .carousel-caption h3, .carousel-caption p, .carousel-caption h6 {
+            margin: 10px 0;
+            color: #000;
+        }
+        
+        .carousel-caption h3, .carousel-caption p{
+            font-size: 20px;
+        }
+    
 
         footer {
             background-color: #000; /* Black background for footer */
@@ -250,6 +280,10 @@
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav">
                 <li class="nav-item">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/f/fc/Official_seal_of_Jahangirnagar_University.png" alt="Logo" width="60">
+                </li>
+               
+                <li class="nav-item">
                     <a class="nav-link" href="{% url 'main' %}">Home</a>
                 </li>
 
@@ -299,13 +333,32 @@
         </ol>
         <div class="carousel-inner">
             <div class="carousel-item active">
-                <img src="https://scontent.fdac22-1.fna.fbcdn.net/v/t39.30808-6/375832801_1539920976549171_1597513606758259105_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=5f2048&_nc_eui2=AeEzVuO7vJEv7Vm5NK8wFXbI4rxdAlTcrU3ivF0CVNytTb02pQH6WkjY0DvZcUpAMZk&_nc_ohc=QjeBFb3Rnx4Q7kNvgGzCi39&_nc_ht=scontent.fdac22-1.fna&oh=00_AYDmfj8_QmsErNnr1tETpZrTdASpS-oJZLH2_mX5XiGh8Q&oe=66529982" class="d-block w-100" alt="First slide">
+                <img src="https://cdn.daily-sun.com/public/news_images/2020/11/08/JU_Pic_daily-sun.jpg" class="d-block w-100" alt="Second slide">
+                <div class="carousel-caption">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/f/fc/Official_seal_of_Jahangirnagar_University.png" alt="Logo">
+                    <h1>Exam Bill</h1>
+                    <p>Department of Computer Science and Engineering</p>
+                    <h6>Jahangirnagar University</h6>
+                </div>
+            
             </div>
             <div class="carousel-item">
                 <img src="https://cdn.daily-sun.com/public/news_images/2020/11/08/JU_Pic_daily-sun.jpg" class="d-block w-100" alt="Second slide">
+                <div class="carousel-caption">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/f/fc/Official_seal_of_Jahangirnagar_University.png" alt="Logo">
+                    <h1>Exam Bill</h1>
+                    <p>Department of Computer Science and Engineering</p>
+                    <h6>Jahangirnagar University</h6>
+                </div>
             </div>
             <div class="carousel-item">
-                <img src="https://juniv.edu/storage/image/gallery/IdGPraVpOsk0XUruJ3WL8Itt5d6B2l3260yCBFdA.jpg" class="d-block w-100" alt="Third slide">
+                <img src="https://cdn.daily-sun.com/public/news_images/2020/11/08/JU_Pic_daily-sun.jpg" class="d-block w-100" alt="Second slide">
+                <div class="carousel-caption">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/f/fc/Official_seal_of_Jahangirnagar_University.png" alt="Logo">
+                    <h1>Exam Bill</h1>
+                    <p>Department of Computer Science and Engineering</p>
+                    <h6>Jahangirnagar University</h6>
+                </div>
             </div>
         </div>
         <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
