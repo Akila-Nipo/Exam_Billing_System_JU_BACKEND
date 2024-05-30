@@ -35,106 +35,7 @@ def Rate_List(request):
     return render(request, 'rate_list.html', {'all_rates': rates})
 
 
-def search_student(request):
-    student_id = request.GET.get('student_id')
-    student = None
-    if student_id:
-        try:
-            student = Student.objects.get(Stu_id=student_id)
-        except Student.DoesNotExist:
-            pass
-    return render(request, 'day4/search_student.html', {'student': student})
 
-
-
-def register(request, student_id):
-    from django.shortcuts import render, redirect 
-from .models import Student, Course
-
-def register(request, student_id):
-    try:
-        student = Student.objects.get(Stu_id=student_id)
-    except Student.DoesNotExist:
-        return redirect('home')  
-
-    if request.method == 'POST':
-        selected_courses_ids = request.POST.getlist('courses')
-        selected_courses = Course.objects.filter(id__in=selected_courses_ids)
-        student.courses.add(*selected_courses)
-        return render(request, 'day4/search_student.html', {'student': student})
-    else:
-        registered_course_ids = student.courses.values_list('id', flat=True)
-        remaining_courses = Course.objects.exclude(id__in=registered_course_ids)
-        return render(request, 'day4/registration.html', {'student': student, 'remaining_courses': remaining_courses})
-
-
-def remove(request,id):
-    c=Course.objects.get(id=id)
-    c.delete()
-    return redirect(Chome)
-
-def edit(request,id):
-    course=Course.objects.get(id=id)
-    cfrm = CourseForm(instance=course)
-    #print('-----------'+request.method+'------------')
-    if request.method=="POST":
-        frm = CourseForm(request.POST, instance=course)
-        if frm.is_valid():
-            frm.save()
-        return redirect(Chome)
-    return render(request,'day4/edit.html',{'form':cfrm})
-
-def add(request):
-    frm = CourseForm()
-    return render(request,'day4/add.html',{'form':frm})
-
-def save(request):
-    if request.method == 'POST':
-        frm = CourseForm(request.POST)
-        if frm.is_valid():
-            frm.save()
-            return redirect(Chome)
-    return redirect(Chome)
-    
-def remove_stu(request,id):
-    c=Student.objects.get(id=id)
-    c.delete()
-    return redirect(home)
-
-def edit_stu(request,id):
-    s=Student.objects.get(id=id)
-    sfrm = StudentForm(instance=s)
-    #print('-----------'+request.method+'------------')
-    if request.method=="POST":
-        frm = StudentForm(request.POST, instance=s)
-        if frm.is_valid():
-            frm.save()
-        return redirect(home)
-    return render(request,'day4/edit_stu.html',{'form':sfrm})
-
-def add_stu(request):
-    frm = StudentForm()
-    return render(request,'day4/add_stu.html',{'form':frm})
-
-def save_stu(request):
-    if request.method == 'POST':
-        frm = StudentForm(request.POST)
-        if frm.is_valid():
-            frm.save()
-            return redirect(home)
-    return redirect(home)    
-
-
-def remove_course(request, student_id, course_id):
-    student = get_object_or_404(Student, id=student_id)
-    course = get_object_or_404(Course, id=course_id)
-    
-    # Remove the course from the student's courses
-    student.courses.remove(course)
-    
-    return render(request, 'day4/search_student.html', {'student': student})
-def main(request):
-    return render(request, 'day4/main.html')
 
 def get_course_data(request):
     # Retrieve course data from the database
@@ -383,8 +284,14 @@ def add_faculty(request):
     if request.method == 'POST':
         form = FacultyMemberForm(request.POST)
         if form.is_valid():
-            form.save()
-            return redirect('faculty_members')  # Redirect to the faculty list page after adding a faculty member
+            name=form.cleaned_data['name']
+            bank_account_number=form.cleaned_data['bank_account_number']
+            if FacultyMember.objects.filter( name=name,bank_account_number=bank_account_number).exists():
+                error_message = "Faculty Member for this name and bank acc no already exists. Please enter unique values."
+                return render(request, 'day4/add_faculty.html', {'form': form, 'error_message': error_message})
+            else:
+               form.save()
+               return redirect('faculty_members')  # Redirect to the faculty list page after adding a faculty member
     else:
         form = FacultyMemberForm()
     return render(request, 'day4/add_faculty.html', {'form': form})
@@ -397,3 +304,130 @@ def teacher_profile(request):
     return render(request, 'day4/teacher_profile.html', {'teacher': teacher, 'results': results})
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+def search_student(request):
+    student_id = request.GET.get('student_id')
+    student = None
+    if student_id:
+        try:
+            student = Student.objects.get(Stu_id=student_id)
+        except Student.DoesNotExist:
+            pass
+    return render(request, 'day4/search_student.html', {'student': student})
+
+
+
+def register(request, student_id):
+    from django.shortcuts import render, redirect 
+from .models import Student, Course
+
+def register(request, student_id):
+    try:
+        student = Student.objects.get(Stu_id=student_id)
+    except Student.DoesNotExist:
+        return redirect('home')  
+
+    if request.method == 'POST':
+        selected_courses_ids = request.POST.getlist('courses')
+        selected_courses = Course.objects.filter(id__in=selected_courses_ids)
+        student.courses.add(*selected_courses)
+        return render(request, 'day4/search_student.html', {'student': student})
+    else:
+        registered_course_ids = student.courses.values_list('id', flat=True)
+        remaining_courses = Course.objects.exclude(id__in=registered_course_ids)
+        return render(request, 'day4/registration.html', {'student': student, 'remaining_courses': remaining_courses})
+
+
+def remove(request,id):
+    c=Course.objects.get(id=id)
+    c.delete()
+    return redirect(Chome)
+
+def edit(request,id):
+    course=Course.objects.get(id=id)
+    cfrm = CourseForm(instance=course)
+    #print('-----------'+request.method+'------------')
+    if request.method=="POST":
+        frm = CourseForm(request.POST, instance=course)
+        if frm.is_valid():
+            frm.save()
+        return redirect(Chome)
+    return render(request,'day4/edit.html',{'form':cfrm})
+
+def add(request):
+    frm = CourseForm()
+    return render(request,'day4/add.html',{'form':frm})
+
+def save(request):
+    if request.method == 'POST':
+        frm = CourseForm(request.POST)
+        if frm.is_valid():
+            frm.save()
+            return redirect(Chome)
+    return redirect(Chome)
+    
+def remove_stu(request,id):
+    c=Student.objects.get(id=id)
+    c.delete()
+    return redirect(home)
+
+def edit_stu(request,id):
+    s=Student.objects.get(id=id)
+    sfrm = StudentForm(instance=s)
+    #print('-----------'+request.method+'------------')
+    if request.method=="POST":
+        frm = StudentForm(request.POST, instance=s)
+        if frm.is_valid():
+            frm.save()
+        return redirect(home)
+    return render(request,'day4/edit_stu.html',{'form':sfrm})
+
+def add_stu(request):
+    frm = StudentForm()
+    return render(request,'day4/add_stu.html',{'form':frm})
+
+def save_stu(request):
+    if request.method == 'POST':
+        frm = StudentForm(request.POST)
+        if frm.is_valid():
+            frm.save()
+            return redirect(home)
+    return redirect(home)    
+
+def remove_course(request, student_id, course_id):
+    student = get_object_or_404(Student, id=student_id)
+    course = get_object_or_404(Course, id=course_id)
+    
+    # Remove the course from the student's courses
+    student.courses.remove(course)
+    
+    return render(request, 'day4/search_student.html', {'student': student})
+def main(request):
+    return render(request, 'day4/main.html')

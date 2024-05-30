@@ -244,6 +244,9 @@
         <h1>Add Faculty Member</h1>
         <form method="POST">
             {% csrf_token %}
+            {% if error_message %}
+            <p style="color: red;">{{ error_message }}</p>
+            {% endif %}
             {{ form.as_p }}
             <button type="submit">Add Faculty Member</button>
         </form>
