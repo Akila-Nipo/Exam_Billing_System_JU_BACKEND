@@ -47,45 +47,6 @@ def get_course_data(request):
     # Return the serialized data as a JSON response
     return JsonResponse(serialized_courses, safe=False)
 
-# def get_courses(request):
-#     if request.method == 'GET':
-#         teacher_name = request.GET.get('teacher')
-#         semester = request.GET.get('semester')
-#         print(f"Received data - Teacher: {teacher_name}, Semester: {semester}")
-
-#         courses = []
-
-#         # Read the CSV file and filter the data based on the selected teacher's name and semester
-#         with open('C:\\project_3_2\\web_lab\\myproject\\routine.csv', newline='') as csvfile:
-#             reader = csv.DictReader(csvfile)
-#             for row in reader:
-               
-#                 print(row) 
-#                 if row["Teacher's Name"] == teacher_name and row['Semester'] == semester:
-#                     courses.extend(row['Courses'].split(','))
-
-#         return JsonResponse({'courses': courses})
-#     else:
-#         return JsonResponse({'error': 'Invalid request method'})
-# def get_courses(request):
-#     if request.method == 'GET':
-#         teacher_name = request.GET.get('teacher')
-#         semester = request.GET.get('semester')
-        
-
-#         courses = []
-
-       
-#         with open('C:\\project_3_2\\routine.txt', 'r') as txtfile:
-#             for line in txtfile:
-#                 row = line.strip().split(',')  # Assuming the data is comma-separated
-             
-#                 if len(row) >= 3 and row[0] == teacher_name and row[1] == semester:
-#                     courses.extend(row[2:])
-
-#         return JsonResponse({'courses': courses})
-#     else:
-#         return JsonResponse({'error': 'Invalid request method'})
 
 def get_courses(request):
     if request.method == 'GET':
@@ -241,14 +202,6 @@ def display_data(request):
     
     return render(request, 'day4/ExamBill_list.html', context)
 
-# class SaveResult(APIView):
-#     def post(self, request, format=None):
-#         serializer = ResultSerializer(data=request.data)
-#         if serializer.is_valid():
-#             with transaction.atomic():
-#                 serializer.save()
-#             return Response(serializer.data, status=status.HTTP_201_CREATED)
-#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 ##CHANGE##
 ##CHANGE##

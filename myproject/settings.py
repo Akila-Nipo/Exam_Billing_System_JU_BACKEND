@@ -29,10 +29,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     # 'myapi',
-    'day2app',
-    'day3app',
     'day4app',
-    'day5app',
+    
     
 ]
 
